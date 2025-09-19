@@ -7,11 +7,28 @@ namespace SimpleCalculator
         public double Calculate (string argOperation, double argFirstNumber, double argSecondNumber)
         {
             double result = 0;
+            argOperation = argOperation.ToLower();
 
-            if (argOperation == "+" || argOperation.ToLower() == "add") {
-                result = argFirstNumber + argSecondNumber;
+            switch (argOperation)
+            {
+
+                case ("+"):
+                    result = argFirstNumber + argSecondNumber;
+                    break;
+
+                case ("-"):
+                    result = argFirstNumber - argSecondNumber;
+                    break;
+
+                case ("*"):
+                    result = argFirstNumber * argSecondNumber;
+                    break;
+
+                case ("/"):
+                    result = argFirstNumber / argSecondNumber;
+                    break;
             }
-
+              
             return result;
         }
     }
