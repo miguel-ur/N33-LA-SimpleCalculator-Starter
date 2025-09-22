@@ -11,19 +11,28 @@ namespace CalculatorEngineLibrary
 
             switch (argOperation)
             {
-
+                case "plus":
+                case "add":
                 case ("+"):
                     result = argFirstNumber + argSecondNumber;
                     break;
 
+                case "minus":
+                case "moins":
+                case "subtract":
                 case ("-"):
                     result = argFirstNumber - argSecondNumber;
                     break;
 
+                case "times":
+                case "multiplier":
+                case "multiply":
                 case ("*"):
                     result = argFirstNumber * argSecondNumber;
                     break;
 
+                case "divide":
+                case "diviser":
                 case ("/"):
                     result = argFirstNumber / argSecondNumber;
                     break;
