@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CalculatorEngineLibrary;
+using System.Threading;
+using System.Globalization;
 
 namespace SimpleCalculator
 {
@@ -8,27 +11,34 @@ namespace SimpleCalculator
     {
         static void Main(string[] args)
         {
-            // Class to convert user input
-            InputConverter inputConverter = new InputConverter();
+            
 
             // Class to perform actual calculations
             CalculatorEngine calculatorEngine = new CalculatorEngine();
+
+            Console.WriteLine("Select language / Sélectionnez la langue (en/fr): ");
+            string language = Console.ReadLine().Trim().ToLower();
+
+            if (language == "en")
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-CA");
+            else
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("fr-CA");
 
             // First number
             double firstNumber;
             while (true)
             {
-                Console.Write("Please Enter the first number: ");
+                Console.Write(Properties.Strings.EnterFirstNum);
                 string input = Console.ReadLine();
 
                 try
                 {
-                    firstNumber = inputConverter.ConvertInputToNumeric(input);
+                    firstNumber = InputConverter.ConvertInputToNumeric(input);
                     break; // exit loop once valid
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Invalid input: {ex.Message}. Try again.");
+                    Console.WriteLine(string.Format(Properties.Strings.InvalidInput, ex.Message));
                 }
             }
 
@@ -36,17 +46,17 @@ namespace SimpleCalculator
             double secondNumber;
             while (true)
             {
-                Console.Write("Please enter the second number: ");
+                Console.Write(Properties.Strings.EnterSecondNum);
                 string input = Console.ReadLine();
 
                 try
                 {
-                    secondNumber = inputConverter.ConvertInputToNumeric(input);
+                    secondNumber = InputConverter.ConvertInputToNumeric(input);
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Invalid input: {ex.Message}. Try again.");
+                    Console.WriteLine(string.Format(Properties.Strings.InvalidInput, ex.Message));
                 }
             }
 
@@ -54,24 +64,24 @@ namespace SimpleCalculator
             string operation = null;
             while (true)
             {
-                Console.Write("Please enter the operation (+, -, *, / or words like plus/minus): ");
+                Console.Write(Properties.Strings.EnterOperation);
                 string input = Console.ReadLine();
 
                 try
                 {
-                    operation = inputConverter.GetOperator(input);
+                    operation = InputConverter.GetOperator(input);
                     break;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Invalid operator: {ex.Message}. Try again.");
+                    Console.WriteLine(string.Format(Properties.Strings.InvalidInput, ex.Message));
                 }
             }
 
             double result = calculatorEngine.Calculate(operation, firstNumber, secondNumber);
 
             var sb = new StringBuilder();
-            sb.AppendFormat("The value {0:F2} {1} the value {2:F2} is equal to {3:F2}",
+            sb.AppendFormat(Properties.Strings.Result,
                             firstNumber, operation, secondNumber, result);
             Console.WriteLine(sb.ToString());
         }
